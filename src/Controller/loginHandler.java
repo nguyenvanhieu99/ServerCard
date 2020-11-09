@@ -14,55 +14,119 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Vector;
-import user.user;
-import user.userIO;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.User;
+import model.userIO;
 
 /**
  *
  * @author van hieu
+ *
  */
-public class loginHandler extends Thread  {
-    public static Vector <user> ar;
-    public Hashtable<String,user> hash;
+public class loginHandler implements Runnable {
 
-    public loginHandler(ServerSocket ss) throws IOException, FileNotFoundException, ClassNotFoundException {
-        login(ss);
+    DataInputStream dis;
+    ObjectOutputStream oos;
+    public int dem;
+    Socket s;
+
+    public loginHandler(DataInputStream dis, ObjectOutputStream oos, int dem, Socket s) {
+        this.dis = dis;
+        this.oos = oos;
+        this.dem = dem;
+        this.s = s;
     }
-    
-    
-    public static user login( ServerSocket ss) throws IOException, FileNotFoundException, ClassNotFoundException {
-        //liston.add(us);
-        
-        Socket s = ss.accept();
-        DataInputStream dis = new DataInputStream(s.getInputStream());
-        
-        String userName = dis.readUTF();
-        String passWord = dis.readUTF();
-        System.out.println(userName + "---" + passWord);
-        ArrayList userList = (ArrayList) new userIO().ReadFile();
-        
-        user [] users = (user[]) userList.toArray();
-        for( user us : users ){
-            if( us.getUserName().equals(userName) && us.getPassWord().equals(passWord)){
-                ObjectOutputStream oos = new ObjectOutputStream( s.getOutputStream());
-                oos.writeObject(us);
-                return us;
+
+    @Override
+    public void run() {
+        String  received = null;
+        while (true) {
+            try {
+                received = dis.readUTF();
+            } catch (IOException ex) {
+                Logger.getLogger(loginHandler.class.getName()).log(Level.SEVERE, null, ex);
             }
+            log(received);
+            int so=Integer.parseInt(received);
+            if(so== Command.CHALLENGE){
+                
+                
+            }
+            else if(so==Command.LOGOUT){
+                
+                
+            }
+            else if(so==Command.GETALLTABLE){
+                
+            }
+            else if(so==Command.GETALLCLIENT){
+                
+            }
+            else if(so==Command.RANK){
+                
+            }
+            
+            
+            
         }
-        System.out.println("Login Fail");
-        return null;
+
     }
-    public void getAllclient(){
-        
+
+//    public loginHandler(ServerSocket ss) throws IOException, FileNotFoundException, ClassNotFoundException {
+//        Socket s = ss.accept();
+//
+//        no = dem;
+//        dem++;
+//        dis = new DataInputStream(s.getInputStream());
+//        oos = new ObjectOutputStream(s.getOutputStream());
+//        login(ss);
+//        hash.put(no, this);
+//        server.hash.put(no, this);
+//        getAllclient();
+//
+//        getAlltable();
+//
+//
+//    }
+//    public static User login(ServerSocket ss) throws IOException, FileNotFoundException, ClassNotFoundException {
+//        //liston.add(us);
+//
+//        String userName = dis.readUTF();
+//        String passWord = dis.readUTF();
+//        System.out.println(userName + "---" + passWord);
+//        ArrayList userList = (ArrayList) new userIO().ReadFile();
+//
+//        User[] users = (User[]) userList.toArray();
+//        for (User us : users) {
+//            if (us.getUserName().equals(userName) && us.getPassWord().equals(passWord)) {
+//
+//                oos.writeObject(us);
+//                return us;
+//            }
+//        }
+//        System.out.println("Login Fail");
+//        return null;
+//    }
+
+    public void getAllclient() {
+
     }
-    public void getAlltable(){
-        
+
+    public void getAlltable() {
+
     }
-    public void getRank(){
-        
+
+    public void getRank() {
+
     }
-    public void  joinTable(){
-        
+
+    public void joinTable() {
+
     }
-    
+
+    public void log(String mess) {
+        System.out.println("log: " + mess);
+    }
+
 }

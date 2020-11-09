@@ -9,8 +9,8 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import user.user;
-import user.userIO;
+import model.User;
+import model.userIO;
 
 /**
  *
@@ -30,7 +30,7 @@ public class registerHandler extends Thread  {
         DataInputStream dis = new DataInputStream(s.getInputStream());
         String userName = dis.readUTF();
         String PassWord = dis.readUTF();
-        user us = new user(userName, PassWord);
+        User us = new User(userName, PassWord);
         new userIO().WriteFile(us);
         System.out.println(us.toString() + " GHI VAO FILE ");
     }
