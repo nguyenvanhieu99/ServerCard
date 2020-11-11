@@ -5,6 +5,8 @@
  */
 package model;
 
+import java.util.Hashtable;
+
 /**
  *
  * @author van hieu
@@ -13,6 +15,8 @@ public class serverSendObject {
     private int command;
     private boolean check;
     private Object object;
+    Hashtable<Object, Object> list;
+
     public serverSendObject(int command, boolean check, Object object) {
         this.command = command;
         this.check = check;
@@ -45,4 +49,13 @@ public class serverSendObject {
     public void setObject(Object object) {
         this.object = object;
     }
+
+    public Hashtable<Object, Object> getList() {
+        return list;
+    }
+
+    public void setList(Hashtable<Object, Object> list) {
+        this.list = list;
+    }
+    
 }
