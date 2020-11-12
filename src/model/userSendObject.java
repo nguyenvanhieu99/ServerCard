@@ -5,14 +5,18 @@
  */
 package model;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author van hieu
  */
 public class userSendObject {
+
     private int command;
     private boolean check;
     private Object object;
+    ArrayList<Object> list;
 
     public userSendObject(int command, boolean check, Object object) {
         this.command = command;
@@ -46,9 +50,13 @@ public class userSendObject {
     public void setObject(Object object) {
         this.object = object;
     }
-    
-    
-    
-    
-    
+
+    public ArrayList<Object> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<Object> list) {
+        this.list = list;
+    }
+
 }

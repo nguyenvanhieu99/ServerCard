@@ -4,11 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/Controller/Command.java</file>
-            <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/model/User.java</file>
             <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/Controller/server.java</file>
             <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/Controller/loginHandler.java</file>
-            <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/servercard/ServerCard.java</file>
-            <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/Controller/Login.java</file>
+            <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/model/serverSendObject.java</file>
+            <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/Controller/Status.java</file>
+            <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/model/userSendObject.java</file>
+            <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/model/table.java</file>
             <file>file:/C:/Users/van%20hieu/Documents/NetBeansProjects/ServerCard/src/Controller/registerHandler.java</file>
         </group>
     </open-files>

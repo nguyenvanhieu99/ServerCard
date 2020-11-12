@@ -5,10 +5,27 @@
  */
 package model;
 
+import Controller.loginHandler;
+import java.util.Hashtable;
+
 /**
  *
  * @author van hieu
  */
 public class table {
-    
+        int num;
+    String name;
+    static Hashtable<String, loginHandler> hash = new Hashtable<>();
+
+    public table() {
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void add(String key, loginHandler d) {
+        hash.put(key, d);
+
+    }
 }

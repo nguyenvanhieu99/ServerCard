@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
@@ -15,7 +16,14 @@ public class serverSendObject {
     private int command;
     private boolean check;
     private Object object;
-    Hashtable<Object, Object> list;
+    ArrayList<Object> list;
+
+    public serverSendObject(int command, boolean check, Object object, ArrayList<Object> list) {
+        this.command = command;
+        this.check = check;
+        this.object = object;
+        this.list = list;
+    }
 
     public serverSendObject(int command, boolean check, Object object) {
         this.command = command;
@@ -50,12 +58,13 @@ public class serverSendObject {
         this.object = object;
     }
 
-    public Hashtable<Object, Object> getList() {
+    public ArrayList<Object> getList() {
         return list;
     }
 
-    public void setList(Hashtable<Object, Object> list) {
+    public void setList(ArrayList<Object> list) {
         this.list = list;
     }
+    
     
 }

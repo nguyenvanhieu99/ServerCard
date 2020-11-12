@@ -15,6 +15,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,7 +35,7 @@ import model.serverSendObject;
 public class server implements Command {
     public ServerSocket control;
     public ServerSocket session;
-    static Hashtable<String, loginHandler> hash = new Hashtable<>();
+    static ArrayList<loginHandler> arr = new ArrayList();
     static int dem=0;
     public server() throws IOException, ClassNotFoundException, FileNotFoundException, SQLException {
         control = new ServerSocket(1002);
@@ -60,15 +61,14 @@ public class server implements Command {
                 if (checkUser(user)) {
                     
                     oos.writeObject("ok");
-                    
-                    loginHandler han = new loginHandler(ois, oos, n, s);
+                    Status sta=new Status(user.getUserName(),"wating", dem);
+                    loginHandler han = new loginHandler(ois, oos, n, s,sta);
                     
                     Thread ds=new Thread(han);
                     
                     ds.start();
                     
-                    hash.put(user.getUserName(), (loginHandler) han);
-                    
+                    arr.add(han);
                     dem++;
                     
                 } else {
@@ -101,9 +101,11 @@ public class server implements Command {
        // throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    public static Hashtable<String, loginHandler> getHash() {
-        return hash;
+    public static ArrayList<loginHandler> getArr() {
+        return arr;
     }
+
+    
     
     
     

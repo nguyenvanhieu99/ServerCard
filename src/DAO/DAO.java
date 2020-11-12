@@ -15,7 +15,7 @@ import java.sql.SQLException;
  */
 public class DAO {
     public Connection getConnect() throws ClassNotFoundException, SQLException{
-        String user ="root", password="", url="jdbc:mysql://localhost:3306/btl_ltm"+"?useSSL=false";
+        String user ="root", password="", url="jdbc:mysql://localhost:3306/playingCard"+"?useSSL=false";
         Connection con = null;
         Class.forName("com.mysql.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);

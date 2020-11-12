@@ -19,5 +19,7 @@ public interface Command {
     public static int CHALLENGE=7;
     public static int JOINTABLE=8;
     public static int CONTINUE=9;
+    public static  int LOGINDONE=10;
+    public static int CREATTABLE=11;
     
 }
