@@ -17,7 +17,7 @@ public class DAO {
     public Connection getConnect() throws ClassNotFoundException, SQLException{
         String user ="root", password="", url="jdbc:mysql://localhost:3306/playingCard"+"?useSSL=false";
         Connection con = null;
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         con = DriverManager.getConnection(url, user, password);
         return con;
     }

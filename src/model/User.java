@@ -6,11 +6,26 @@
 package model;
 /**
  *
- * @author hoa
+ * @author hieu
  */
 import java.io.Serializable;
 public class User implements Serializable {
-    String userName, PassWord;
+    String userName, PassWord,email;
+
+    public User(String userName, String PassWord, String email) {
+        this.userName = userName;
+        this.PassWord = PassWord;
+        this.email = email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+
+    public String getEmail() {
+        return email;
+    }
 
     public User(String userName, String PassWord) {
         this.userName = userName;

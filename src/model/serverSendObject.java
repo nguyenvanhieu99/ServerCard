@@ -5,6 +5,7 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -12,7 +13,7 @@ import java.util.Hashtable;
  *
  * @author van hieu
  */
-public class serverSendObject {
+public class serverSendObject implements Serializable{
     private int command;
     private boolean check;
     private Object object;

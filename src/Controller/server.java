@@ -35,6 +35,7 @@ import model.serverSendObject;
 public class server implements Command {
     public ServerSocket control;
     public ServerSocket session;
+    public Socket s;
     static ArrayList<loginHandler> arr = new ArrayList();
     static int dem=0;
     public server() throws IOException, ClassNotFoundException, FileNotFoundException, SQLException {
@@ -49,20 +50,30 @@ public class server implements Command {
 
     private void listenning() throws IOException, FileNotFoundException, ClassNotFoundException, SQLException {
         System.out.println("Server Listening : ");
-        Socket s = control.accept();
-        ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+         s = control.accept();
+        log("co ket noi");
         ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-        userSendObject term=(userSendObject)ois.readObject();
+        log("mo luong inout");
+       
+        
+        userSendObject term =new userSendObject();
+        //term=ReceiveData();
+        
+        term=(userSendObject) ois.readObject();
         int n =term.getCommand();
+         User o = (User) term.getObject();
         if (n == LOGIN) {
-            Object o = term.getObject();
             if (o instanceof User) {
-                User user = (User) o;
-                if (checkUser(user)) {
-                    
-                    oos.writeObject("ok");
-                    Status sta=new Status(user.getUserName(),"wating", dem);
-                    loginHandler han = new loginHandler(ois, oos, n, s,sta);
+                log(o.getUserName()+" : "+o.getPassWord());
+                if (checkUser(o)) {
+                    serverSendObject d=new serverSendObject(LOGIN, true, o);
+                     ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+                     oos.writeObject(d);
+                    //sendData(d);
+                    log("da gui");
+                    Status sta=new Status(o.getUserName(),"wating", dem);
+                    loginHandler han;
+                    han = new loginHandler(ois, oos, n, s,sta);
                     
                     Thread ds=new Thread(han);
                     
@@ -72,27 +83,56 @@ public class server implements Command {
                     dem++;
                     
                 } else {
-                    oos.writeObject("false");
+                    
+                     serverSendObject d=new serverSendObject(LOGIN, false, o);
+                    sendData(d);
                 }
             }
 
-        } else {
-//            Thread re = new registerHandler(ssRegister);
+        } else if(n==Command.REGISTER) {
+            if(register(o)){
+                serverSendObject d=new serverSendObject(REGISTER, true, o);
+                     ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+                     oos.writeObject(d);
+            }else {
+                serverSendObject d=new serverSendObject(REGISTER, false, o);
+                     ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+                     oos.writeObject(d);
+            }
+                
+            registerHandler re= new registerHandler(s);
         }
     }
-    public static void main(String[] args) throws IOException, FileNotFoundException, ClassNotFoundException {
+
+    public userSendObject ReceiveData(){
+         userSendObject om = new userSendObject();
         try {
-            server server = new server();
-        } catch (SQLException ex) {
+           
+            
+            ObjectInputStream ois;
+            ois = new ObjectInputStream(s.getInputStream());
+            om = (userSendObject) ois.readObject();
+            return om;
+        } catch (IOException ex) {
+            Logger.getLogger(server.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
             Logger.getLogger(server.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        return om;
     }
-
+    
+    public void sendData(serverSendObject orm){
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+            oos.writeObject(orm);
+        } catch (IOException ex) {
+            Logger.getLogger(server.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     private boolean checkUser(User user) throws ClassNotFoundException, SQLException {
         UserDAO contr = new UserDAO();
-        User u = null;
-        if(contr.checkLogin(u)){
+        
+        if(contr.checkLogin(user)){
             return true;
         }
         else {
@@ -104,7 +144,17 @@ public class server implements Command {
     public static ArrayList<loginHandler> getArr() {
         return arr;
     }
+    public  void log(String s){
+        System.out.println(s);
+    }
 
+    private boolean register(User o) throws ClassNotFoundException, SQLException {
+        UserDAO udao =new UserDAO();
+        
+        if(udao.register(o)) return true;
+        return false;
+                
+    }
     
     
     

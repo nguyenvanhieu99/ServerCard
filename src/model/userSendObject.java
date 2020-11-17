@@ -5,13 +5,14 @@
  */
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author van hieu
  */
-public class userSendObject {
+public class userSendObject implements Serializable{
 
     private int command;
     private boolean check;

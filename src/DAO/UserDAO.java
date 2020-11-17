@@ -14,15 +14,55 @@ import java.sql.SQLException;
  *
  * @author Admin
  */
-public class UserDAO extends DAO{
-    public boolean checkLogin(User u) throws ClassNotFoundException, SQLException{
-        String checklogin = " Select * user where userName = ? and password = ?";
+public class UserDAO extends DAO {
+
+    public UserDAO() {
+        super();
+    }
+
+    public boolean register(User u) throws ClassNotFoundException, SQLException {
+        String s = u.getUserName();
+        if (findbyname(s)) {
+            return false;
+        }
+        String checklogin = "INSERT INTO user VALUES (?,?,?)";
         PreparedStatement p = getConnect().prepareStatement(checklogin);
+        p.setString(1, s);
+        p.setString(2, u.getPassWord());
+        p.setString(3, u.getEmail());
+        int t=p.executeUpdate();
+        if(t==1) return true;
+        else return false;
+        
+    }
+
+    public boolean findbyname(String s) throws ClassNotFoundException, SQLException {
+        String query = "SELECT * FROME user WHERE username =?";
+        PreparedStatement p = getConnect().prepareStatement(query);
+        p.setString(1, s);
+        ResultSet rs = p.executeQuery();
+        if (rs.next()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean checkLogin(User u) throws ClassNotFoundException, SQLException {
+        String checklogin = "SELECT * FROM user WHERE username = ? and password = ?";
+        PreparedStatement p = getConnect().prepareStatement(checklogin);
+        log(u.getUserName() + ":" + u.getPassWord());
         p.setString(1, u.getUserName());
         p.setString(2, u.getPassWord());
         ResultSet rs = p.executeQuery();
-        
-        if(rs.next())  return true;
-        else return false;
+
+        if (rs.next()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public void log(String s) {
+        System.out.println(s);
     }
 }
