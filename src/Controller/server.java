@@ -100,7 +100,7 @@ public class server implements Command {
                      oos.writeObject(d);
             }
                 
-            registerHandler re= new registerHandler(s);
+            //registerHandler re= new registerHandler(s);
         }
     }
 
@@ -151,7 +151,11 @@ public class server implements Command {
     private boolean register(User o) throws ClassNotFoundException, SQLException {
         UserDAO udao =new UserDAO();
         
-        if(udao.register(o)) return true;
+        if(udao.register(o)) {
+            log("dung roi");
+            return true;
+        }
+            log("sai roi");
         return false;
                 
     }

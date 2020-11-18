@@ -25,11 +25,12 @@ public class UserDAO extends DAO {
         if (findbyname(s)) {
             return false;
         }
-        String checklogin = "INSERT INTO user VALUES (?,?,?)";
+        String checklogin = "INSERT INTO user(username,password,email) VALUES (?,?,?)";
         PreparedStatement p = getConnect().prepareStatement(checklogin);
         p.setString(1, s);
         p.setString(2, u.getPassWord());
         p.setString(3, u.getEmail());
+        //boolean td = p.execute();
         int t=p.executeUpdate();
         if(t==1) return true;
         else return false;
@@ -37,14 +38,14 @@ public class UserDAO extends DAO {
     }
 
     public boolean findbyname(String s) throws ClassNotFoundException, SQLException {
-        String query = "SELECT * FROME user WHERE username =?";
+        String query = "SELECT * FROM user WHERE username =?";
         PreparedStatement p = getConnect().prepareStatement(query);
         p.setString(1, s);
         ResultSet rs = p.executeQuery();
         if (rs.next()) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public boolean checkLogin(User u) throws ClassNotFoundException, SQLException {
